@@ -45,3 +45,15 @@ jar {
         rename { "${it}_${project.archivesBaseName}" }
     }
 }
+
+// Custom output directory - Desktop
+build.doLast {
+    def sourceJar = file("build/libs/${project.archives_base_name}-${project.version}.jar")
+    def desktopDir = new File(System.getProperty("user.home"), "Desktop")
+    def destJar = new File(desktopDir, sourceJar.name)
+    
+    if (sourceJar.exists()) {
+        sourceJar.renameTo(destJar)
+        println "✓ JAR copied to Desktop: ${destJar.absolutePath}"
+    }
+}
